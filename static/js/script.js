@@ -106,11 +106,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // === Подсказка ===
     const hint = document.createElement("div");
-    hint.textContent = "Нажмите на экран, чтобы все загрузилось до конца)";
+    hint.textContent = "Нажмите на экран, если видео не начали проигрываться)";
     Object.assign(hint.style, {
         position: "fixed",
         top: "20px",
-        right: "-400px",
+        right: "-800px",
         background: "rgba(0, 0, 0, 0.7)",
         color: "#fff",
         padding: "12px 18px",
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setTimeout(() => {
         hint.style.right = "20px";
-    }, 4000);
+    }, 10000);
 
     const hideHint = () => {
         hint.style.opacity = "0";
