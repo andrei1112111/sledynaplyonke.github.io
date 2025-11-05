@@ -149,18 +149,43 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // === Запуск загрузки видео ===
+    // === Запуск загрузки и управление воспроизведением ===
     if (videos.length === 0) {
         tryInitVFX();
     } else {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+                if (!video.src && video.dataset.src) {
+                    video.src = video.dataset.src; // ленивое подключение
+                }
+
+                if (entry.isIntersecting) {
+                    // когда видео в зоне видимости — запустить
+                    video.play().catch(() => {});
+                } else {
+                    // если ушло за экран — поставить на паузу
+                    video.pause();
+                }
+            });
+        }, {
+            threshold: 0.05 // видео считается "на экране", если видно хотя бы 5%
+        });
+
         videos.forEach(video => {
+            // Подключаем observer
+            observer.observe(video);
+
+            // Начальная инициализация
             playVideo(video);
 
+            // Обработка загрузки
             video.addEventListener("loadeddata", () => {
                 loadedVideos++;
                 tryInitVFX();
             });
 
+            // Ошибка загрузки
             video.addEventListener("error", () => {
                 console.error("Video failed to load:", video.dataset.src || video.src);
                 loadedVideos++;
