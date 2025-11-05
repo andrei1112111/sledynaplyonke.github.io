@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Статьи</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik+80s+Fade&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="static/css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.13/dist/hls.min.js"></script>
+    <script type="module" src="static/js/script.js" defer></script>
+
+    <style>
+        video.header-video {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            pointer-events: none;
+            user-select: none;
+            background: black;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ----------------------------------------------------------------------------------------------------- -->
+<!-- ----------------------------------------------------------------------------------------------------- -->
+<!-- ----------------------------------------------------------------------------------------------------- -->
+
+<section>
+
+    <section class="last">
+        <a href="v_pohode_vsegda_vse_ne_po_planu.html" class="last">
+            {% if article.video_title %}
+            <video
+                    class="header-video"
+                    autoplay
+                    loop
+                    muted
+                    playsinline
+                    preload="auto"
+                    disablePictureInPicture
+                    controlslist="nodownload nofullscreen noremoteplayback noplaybackrate"
+                    data-src="data/превьюшка.mp4"
+                    crossOrigin="anonymous"
+            ></video>
+            <h2 style="color: antiquewhite" data-z="1">В походе всегда все не по плану...</h2>
+        </a>
+    </section>
+</section>
+
+<!-- ----------------------------------------------------------------------------------------------------- -->
+<!-- ----------------------------------------------------------------------------------------------------- -->
+<!-- ----------------------------------------------------------------------------------------------------- -->
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+html, body { margin: 0; }
+
+.press-start-2p-regular {
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+body {
+  background: black;
+  overflow-x: hidden;
+    font-family: press-start-2p-regular, ui-serif;
+}
+
+
+section {
+  margin: auto;
+  width: 80%;
+  color: white;
+}
+
+video.header-video { opacity: 0; pointer-events: none; }
+video.active { opacity: 1; pointer-events: auto; }
+
+.col {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  margin: 2em 0;
+    max-width: 80%;
+}
+.right { text-align: right; }
+.center { text-align: center; }
+
+.last {
+  margin-bottom: 0;
+  display: grid;
+  place-items: center;
+}
+.last > * {
+  grid-area: 1 / 1;
+}
+.last h2 {
+  color: black;
+}
+
+h1 {
+  font-size: 8vh;
+  margin: 0;
+  opacity: 0;
+}
+h2 {
+  font-size: 6vh;
+  margin: 0;
+  opacity: 0;
+}
+p {
+  font-size: 3vh;
+    max-width: 1000px;
+    margin: auto;
+  opacity: 0;
+}
+
+img {
+  opacity: 0;
+  margin: 2em 0;
+  width: 100%;
+}
+
+
+.end img {
+    align-content: center;
+    margin-top: 40%;
+}
+
+.col > img {
+  max-width: 50%;
+  margin: 0;
+}
+
