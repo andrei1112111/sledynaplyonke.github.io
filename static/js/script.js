@@ -1,4 +1,4 @@
-import { VFX } from "/static/js/vfx-core.js";
+import { VFX } from "./vfx-core.js";
 
 // ====== Основной шейдер (постэффект) ======
 const shader = `
