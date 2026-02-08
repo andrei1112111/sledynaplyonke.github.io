@@ -6,14 +6,150 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Банька по черному :)</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik+80s+Fade&display=swap" rel="stylesheet">
 <!-- 
     <link rel="stylesheet" href="static/css/tanvan.css"> -->
-    <!-- HLS.js через CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.13/dist/hls.min.js"></script>
+    <script>
+
+        // ====== Универсальная функция для локальных видео ======
+function playVideo(video) {
+    const src = video.dataset.src || video.src;
+    if (!src) return;
+    if (!video.src) video.src = src;
+
+    // обязательно задать mute + inline
+    video.muted = true;
+    video.playsInline = true;
+
+    video.play().catch(err => {
+        console.warn("Autoplay blocked, waiting for user gesture:", err);
+    });
+}
+
+// ====== Инициализация после загрузки страницы ======
+document.addEventListener("DOMContentLoaded", () => {
+    const videos = document.querySelectorAll("video.header-video");
+    let loadedVideos = 0;
+    let vfxInitialized = false;
+
+    // === Подсказка ===
+    const hint = document.createElement("div");
+    hint.textContent = "Нажмите на экран, если видео не начали проигрываться)";
+    Object.assign(hint.style, {
+        position: "fixed",
+        top: "20px",
+        right: "-800px",
+        background: "rgba(0, 0, 0, 0.7)",
+        color: "#fff",
+        padding: "12px 18px",
+        borderRadius: "8px",
+        fontSize: "15px",
+        fontFamily: "sans-serif",
+        zIndex: 9999,
+        boxShadow: "0 0 10px rgba(0,0,0,0.4)",
+        transition: "right 0.8s ease, opacity 0.8s ease",
+        opacity: "0.9"
+    });
+    document.body.appendChild(hint);
+
+    setTimeout(() => {
+        hint.style.right = "20px";
+    }, 10000);
+
+    const hideHint = () => {
+        hint.style.opacity = "0";
+        hint.style.right = "-400px";
+        setTimeout(() => hint.remove(), 800);
+        document.removeEventListener("click", hideHint);
+        // запустить все видео при первом клике (если autoplay был заблокирован)
+        videos.forEach(v => v.play().catch(()=>{}));
+    };
+    document.addEventListener("click", hideHint);
+
+    // === Функция инициализации VFX ===
+    function tryInitVFX() {
+        if (vfxInitialized) return;
+        if (videos.length === 0 || loadedVideos === videos.length) {
+            setTimeout(() => {
+                initVFX();
+                vfxInitialized = true;
+            }, 300);
+        }
+    }
+
+    // === Запуск загрузки и управление воспроизведением ===
+    if (videos.length === 0) {
+        tryInitVFX();
+    } else {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+                if (!video.src && video.dataset.src) {
+                    video.src = video.dataset.src; // ленивое подключение
+                }
+
+                if (entry.isIntersecting) {
+                    // когда видео в зоне видимости — запустить
+                    video.play().catch(() => {});
+                } else {
+                    // если ушло за экран — поставить на паузу
+                    video.pause();
+                }
+            });
+        }, {
+            threshold: 0.05 // видео считается "на экране", если видно хотя бы 5%
+        });
+
+        videos.forEach(video => {
+            // Подключаем observer
+            observer.observe(video);
+
+            // Начальная инициализация
+            playVideo(video);
+
+            // Обработка загрузки
+            video.addEventListener("loadeddata", () => {
+                loadedVideos++;
+                tryInitVFX();
+            });
+
+            // Ошибка загрузки
+            video.addEventListener("error", () => {
+                console.error("Video failed to load:", video.dataset.src || video.src);
+                loadedVideos++;
+                tryInitVFX();
+            });
+        });
+    }
+});
+
+// ====== Инициализация VFX ======
+function initVFX() {
+    const vfx = new VFX({
+        scrollPadding: false,
+        postEffect: { shader },
+        autoResize: true,
+        cover: true,
+        mipmap: false, // отключаем генерацию mipmap
+    });
+
+    let i = 0;
+    for (const el of document.querySelectorAll("img, video, h1, h2, p")) {
+        const z = el.getAttribute("data-z");
+        const isVideo = el.tagName === "VIDEO";
+
+        vfx.add(el, {
+            shader: shader2,
+            uniforms: { id: i++ },
+            zIndex: z ? parseInt(z) : 0,
+            replace: !isVideo
+        });
+    }
+
+    return vfx;
+}
+
+    </script>
+
 
     <style>
         video.header-video {
@@ -25,19 +161,13 @@
             user-select: none;
             background: black;
         }
-        @font-face {
-		font-family: 'Sucrose Bold Two';
-		src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/sucrose.woff2') format('woff2');
-		}
-@font-face {
-    font-family: 'IM Fell French Canon Pro';
-    src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/im-fell-french-canon-pro.woff2') format('woff2');
-}
+
 * {
   box-sizing: border-box;
 }
 img {
-  max-height: 1200px;
+  max-width: 100%; /* Макс. ширина 100% от контейнера */
+  height: auto
 }
 
 body {
@@ -50,6 +180,14 @@ header {
 	background-size: cover;
   font-family: 'Sucrose Bold Two';
 }
+
+#photo2  { 
+	background: url(https://cdn.jsdelivr.net/gh/andrei1112111/sledynaplyonke.github.io@main/data/tanvan/1.jpeg) no-repeat;
+padding-top: 61.93333333%;
+	background-size: cover;
+  font-family: 'Sucrose Bold Two';
+}
+
 header img {
 	position: absolute;
 	top: 0;
@@ -64,14 +202,17 @@ header h1 {
   line-height: .8;
   margin-top: 0;
   text-align: center;
-  color:bisque;
+  color:beige;
 }
 header h1 span {
   display: block;
   font-size: 8.75vw;
 }
 p {
-    color:bisque;
+    font-family: 'Courier New', Courier, monospace;
+    font:bold;
+    color:beige;
+    padding: 2rem 25%;
 }
 main { 
   background: darkslategrey;
@@ -79,7 +220,7 @@ main {
   border: 1px solid darkslategrey;
   font-family: 'IM Fell French Canon Pro';
   font-size: 1.4rem;
-  padding: 2rem 25%;
+  /* padding: 2rem 25%; */
   line-height: 1.6;
 }
 @media all and (max-width: 400px) {
@@ -90,6 +231,12 @@ main {
 </header>
 <main>
   <p>Посреди обского моря находится прикрасный остров Таньвань.<br> По легенде назван он вчесть двух влюбленных: Тани и Вани. </p>
+
+  <h1 id="photo2"></h1>
+
+  <video class="header-video" preload="none" loading="lazy" autoplay loop muted playsinline preload="auto" disablePictureInPicture controlslist="nodownload nofullscreen noremoteplayback noplaybackrate"
+               data-src="https://cdn.jsdelivr.net/gh/andrei1112111/sledynaplyonke.github.io@main/data/tanvan/2.mp4"
+               crossOrigin="anonymous"></video>
 </main>
 <body>
 </body>
