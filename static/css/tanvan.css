@@ -9,11 +9,15 @@
 * {
   box-sizing: border-box;
 }
+img {
+  max-height: 1200px;
+}
+
 body {
   margin: 0;
 }
 header { 
-	background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/mountain-range.jpg) no-repeat;
+	background: url(https://cdn.jsdelivr.net/gh/andrei1112111/sledynaplyonke.github.io@main/data/tanvan/IMG_4534-3.jpeg) no-repeat;
 	padding-top: 61.93333333%;
 	background-size: cover;
   font-family: 'Sucrose Bold Two';
