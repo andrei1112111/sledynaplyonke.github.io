@@ -235,15 +235,29 @@ main {
   main { padding: 2rem; }
 }
 
+.video-wrap {
+  max-height: 400px;
+  display: flex;
+  justify-content: center;
+}
+
+.video-wrap video {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+}
+
     </style>
 </header>
 <main>
   <p>Посреди обского моря находится прикрасный остров Таньвань.<br><br>
     Вот только вспомнили мы про него уже в середине февраля... Было принято решение незамедлительно выдвигаться на остров пока лед на море еще прочный.</p>
 
+    <div class="video-wrap">
   <video class="header-video" preload="none" loading="lazy" autoplay loop muted playsinline preload="auto" disablePictureInPicture controlslist="nodownload nofullscreen noremoteplayback noplaybackrate"
                data-src="https://cdn.jsdelivr.net/gh/andrei1112111/sledynaplyonke.github.io@main/data/tanvan/2.mp4"
                crossOrigin="anonymous"></video>
+    </div>
 
     <p>Собрав сумки мы выдвинулись пасмурным субботним днем. <br>Путь проходил через станцию обское море. По какой-то таинственной причине через эту станцию проходят все пути...</p>          
   <h1 style="background: url(https://cdn.jsdelivr.net/gh/andrei1112111/sledynaplyonke.github.io@main/data/tanvan/3.jpg) no-repeat;
