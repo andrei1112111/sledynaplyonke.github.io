@@ -224,16 +224,24 @@ main {
 }
 
 .video-wrap {
-  max-height: 600px;
+  width: 100%;
+  max-width: 900px;   /* ← один размер для всех */
+  height: 500px;      /* ← один размер для всех */
+  margin: 3rem auto;  /* центр по горизонтали */
   display: flex;
+  align-items: center;
   justify-content: center;
+  background: black;  /* красиво + letterbox */
 }
 
 .video-wrap video {
-  height: 100%;
-  width: auto;
   max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  display: block;
 }
+
 
     </style>
 </header>
@@ -350,7 +358,7 @@ main {
 
     <p>Процесс занял примерно 40 минут и 3 попытки.</p>
 
-    <div class="video-wrap"></div>
+    <div class="video-wrap">
     <video class="header-video" preload="none" loading="lazy" autoplay loop muted playsinline preload="auto" disablePictureInPicture controlslist="nodownload nofullscreen noremoteplayback noplaybackrate"
                data-src="https://cdn.jsdelivr.net/gh/andrei1112111/sledynaplyonke.github.io@main/data/tanvan/17.mp4"
                crossOrigin="anonymous"></video>
