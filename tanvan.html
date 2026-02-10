@@ -357,6 +357,25 @@ main {
 
     <p>В таких местах встречаются тетради с корандашами. Этакиt дневники возведенной кем-то постройки. На страницах очерки десятков путников посетивших место.</p>
 
+    <div class="video-wrap video-with-sound">
+    <video
+        class="content-video"
+        controls
+        preload="none"
+        playsinline
+    >
+        <source
+        src="https://cdn.jsdelivr.net/gh/andrei1112111/sledynaplyonke.github.io@main/data/tanvan/21.webm"
+        type="video/webm"
+        >
+        <source
+        src="https://cdn.jsdelivr.net/gh/andrei1112111/sledynaplyonke.github.io@main/data/tanvan/21.mp4"
+        type="video/mp4"
+        >
+        Ваш браузер не поддерживает видео.
+    </video>
+    </div>
+
     <h1 style="background: url(https://cdn.jsdelivr.net/gh/andrei1112111/sledynaplyonke.github.io@main/data/tanvan/14.jpg) no-repeat;
                 padding-top: 61.93333333%;
                 background-size: cover;
@@ -584,4 +603,5 @@ main {
 
 
 <!-- ffmpeg -i 32.mp4 -c:v libvpx-vp9 -crf 36 -b:v 0 -vf "scale=960:-2,fps=30" -an 32.webm -->
-<!-- ffmpeg -i 32.mp4 -c copy -movflags +faststart 3200.mp4 -->
+<!-- ffmpeg -i 21.mp4 -c:v libvpx-vp9 -crf 36 -b:v 0 -vf "scale=960:-2,fps=30" -c:a libopus -b:a 96k 21.webm -->
+<!-- ffmpeg -i 21.mp4 -c copy -movflags +faststart 2100.mp4 -->
